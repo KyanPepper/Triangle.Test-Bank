@@ -1,0 +1,16 @@
+{
+  "webProject": {
+    "projectFile": "./Triangle.TestBank.Web/Triangle.TestBank.Web.csproj"
+  },
+  "dataProject": {
+    "projectFile": "./Triangle.TestBank.Data/Triangle.TestBank.Data.csproj"
+  },
+
+  "rootGenerator": "Vue",
+
+  "generatorConfig": {
+    "Scripts": {
+      "targetDirectory": "../src"
+    }
+  }
+}
