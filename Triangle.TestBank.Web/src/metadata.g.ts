@@ -7,40 +7,132 @@ import {
 
 
 const domain: Domain = { enums: {}, types: {}, services: {} }
-export const WidgetCategory = domain.enums.WidgetCategory = {
-  name: "WidgetCategory",
-  displayName: "Widget Category",
+export const Subjects = domain.enums.Subjects = {
+  name: "Subjects",
+  displayName: "Subjects",
   type: "enum",
-  ...getEnumMeta<"Whizbangs"|"Sprecklesprockets"|"Discombobulators">([
+  ...getEnumMeta<"CPTS"|"MATH"|"ENGR"|"PHYS"|"CHEM"|"BIO"|"EE"|"ME"|"CE"|"MSE"|"STAT"|"CSTM">([
   {
     value: 0,
-    strValue: "Whizbangs",
-    displayName: "Whizbangs",
+    strValue: "CPTS",
+    displayName: "CPTS",
   },
   {
     value: 1,
-    strValue: "Sprecklesprockets",
-    displayName: "Sprecklesprockets",
+    strValue: "MATH",
+    displayName: "MATH",
   },
   {
     value: 2,
-    strValue: "Discombobulators",
-    displayName: "Discombobulators",
+    strValue: "ENGR",
+    displayName: "ENGR",
+  },
+  {
+    value: 3,
+    strValue: "PHYS",
+    displayName: "PHYS",
+  },
+  {
+    value: 4,
+    strValue: "CHEM",
+    displayName: "CHEM",
+  },
+  {
+    value: 5,
+    strValue: "BIO",
+    displayName: "BIO",
+  },
+  {
+    value: 6,
+    strValue: "EE",
+    displayName: "EE",
+  },
+  {
+    value: 7,
+    strValue: "ME",
+    displayName: "ME",
+  },
+  {
+    value: 8,
+    strValue: "CE",
+    displayName: "CE",
+  },
+  {
+    value: 9,
+    strValue: "MSE",
+    displayName: "MSE",
+  },
+  {
+    value: 10,
+    strValue: "STAT",
+    displayName: "STAT",
+  },
+  {
+    value: 11,
+    strValue: "CSTM",
+    displayName: "CSTM",
   },
   ]),
 }
-export const Widget = domain.types.Widget = {
-  name: "Widget",
-  displayName: "Widget",
+export const Terms = domain.enums.Terms = {
+  name: "Terms",
+  displayName: "Terms",
+  type: "enum",
+  ...getEnumMeta<"Fall2021"|"Spring2021"|"Fall2022"|"Spring2022"|"Fall2023"|"Spring2023"|"Fall2024"|"Spring2024">([
+  {
+    value: 0,
+    strValue: "Fall2021",
+    displayName: "Fall 2021",
+  },
+  {
+    value: 1,
+    strValue: "Spring2021",
+    displayName: "Spring 2021",
+  },
+  {
+    value: 2,
+    strValue: "Fall2022",
+    displayName: "Fall 2022",
+  },
+  {
+    value: 3,
+    strValue: "Spring2022",
+    displayName: "Spring 2022",
+  },
+  {
+    value: 4,
+    strValue: "Fall2023",
+    displayName: "Fall 2023",
+  },
+  {
+    value: 5,
+    strValue: "Spring2023",
+    displayName: "Spring 2023",
+  },
+  {
+    value: 6,
+    strValue: "Fall2024",
+    displayName: "Fall 2024",
+  },
+  {
+    value: 7,
+    strValue: "Spring2024",
+    displayName: "Spring 2024",
+  },
+  ]),
+}
+export const Exam = domain.types.Exam = {
+  name: "Exam",
+  displayName: "Exam",
   get displayProp() { return this.props.name }, 
   type: "model",
-  controllerRoute: "Widget",
-  get keyProp() { return this.props.widgetId }, 
+  controllerRoute: "Exam",
+  get keyProp() { return this.props.examId }, 
   behaviorFlags: 7 as BehaviorFlags,
   props: {
-    widgetId: {
-      name: "widgetId",
-      displayName: "Widget Id",
+    examId: {
+      name: "examId",
+      displayName: "Exam Id",
       type: "number",
       role: "primaryKey",
       hidden: 3 as HiddenAreas,
@@ -54,22 +146,34 @@ export const Widget = domain.types.Widget = {
         required: val => (val != null && val !== '') || "Name is required.",
       }
     },
-    category: {
-      name: "category",
-      displayName: "Category",
+    subject: {
+      name: "subject",
+      displayName: "Subject",
       type: "enum",
-      get typeDef() { return domain.enums.WidgetCategory },
+      get typeDef() { return domain.enums.Subjects },
       role: "value",
       rules: {
-        required: val => val != null || "Category is required.",
+        required: val => val != null || "Subject is required.",
       }
     },
-    inventedOn: {
-      name: "inventedOn",
-      displayName: "Invented On",
-      type: "date",
-      dateKind: "datetime",
+    term: {
+      name: "term",
+      displayName: "Term",
+      type: "enum",
+      get typeDef() { return domain.enums.Terms },
       role: "value",
+      rules: {
+        required: val => val != null || "Term is required.",
+      }
+    },
+    pdfPath: {
+      name: "pdfPath",
+      displayName: "Pdf Path",
+      type: "string",
+      role: "value",
+      rules: {
+        required: val => (val != null && val !== '') || "Pdf Path is required.",
+      }
     },
   },
   methods: {
@@ -80,10 +184,11 @@ export const Widget = domain.types.Widget = {
 
 interface AppDomain extends Domain {
   enums: {
-    WidgetCategory: typeof WidgetCategory
+    Subjects: typeof Subjects
+    Terms: typeof Terms
   }
   types: {
-    Widget: typeof Widget
+    Exam: typeof Exam
   }
   services: {
   }

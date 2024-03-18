@@ -3,33 +3,34 @@ import * as $models from './models.g'
 import * as $apiClients from './api-clients.g'
 import { ViewModel, ListViewModel, ServiceViewModel, DeepPartial, defineProps } from 'coalesce-vue/lib/viewmodel'
 
-export interface WidgetViewModel extends $models.Widget {
-  widgetId: number | null;
+export interface ExamViewModel extends $models.Exam {
+  examId: number | null;
   name: string | null;
-  category: $models.WidgetCategory | null;
-  inventedOn: Date | null;
+  subject: $models.Subjects | null;
+  term: $models.Terms | null;
+  pdfPath: string | null;
 }
-export class WidgetViewModel extends ViewModel<$models.Widget, $apiClients.WidgetApiClient, number> implements $models.Widget  {
+export class ExamViewModel extends ViewModel<$models.Exam, $apiClients.ExamApiClient, number> implements $models.Exam  {
   
-  constructor(initialData?: DeepPartial<$models.Widget> | null) {
-    super($metadata.Widget, new $apiClients.WidgetApiClient(), initialData)
+  constructor(initialData?: DeepPartial<$models.Exam> | null) {
+    super($metadata.Exam, new $apiClients.ExamApiClient(), initialData)
   }
 }
-defineProps(WidgetViewModel, $metadata.Widget)
+defineProps(ExamViewModel, $metadata.Exam)
 
-export class WidgetListViewModel extends ListViewModel<$models.Widget, $apiClients.WidgetApiClient, WidgetViewModel> {
+export class ExamListViewModel extends ListViewModel<$models.Exam, $apiClients.ExamApiClient, ExamViewModel> {
   
   constructor() {
-    super($metadata.Widget, new $apiClients.WidgetApiClient())
+    super($metadata.Exam, new $apiClients.ExamApiClient())
   }
 }
 
 
 const viewModelTypeLookup = ViewModel.typeLookup = {
-  Widget: WidgetViewModel,
+  Exam: ExamViewModel,
 }
 const listViewModelTypeLookup = ListViewModel.typeLookup = {
-  Widget: WidgetListViewModel,
+  Exam: ExamListViewModel,
 }
 const serviceViewModelTypeLookup = ServiceViewModel.typeLookup = {
 }

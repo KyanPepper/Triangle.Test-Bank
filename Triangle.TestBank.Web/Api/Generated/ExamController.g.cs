@@ -1,5 +1,4 @@
 
-using Triangle.TestBank.Web.Models;
 using IntelliTect.Coalesce;
 using IntelliTect.Coalesce.Api;
 using IntelliTect.Coalesce.Api.Behaviors;
@@ -18,54 +17,55 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Triangle.TestBank.Web.Models;
 
 namespace Triangle.TestBank.Web.Api
 {
-    [Route("api/Widget")]
+    [Route("api/Exam")]
     [Authorize]
     [ServiceFilter(typeof(IApiActionFilter))]
-    public partial class WidgetController
-        : BaseApiController<Triangle.TestBank.Data.Models.Widget, WidgetDtoGen, Triangle.TestBank.Data.AppDbContext>
+    public partial class ExamController
+        : BaseApiController<Triangle.TestBank.Data.Models.Exam, ExamDtoGen, Triangle.TestBank.Data.AppDbContext>
     {
-        public WidgetController(CrudContext<Triangle.TestBank.Data.AppDbContext> context) : base(context)
+        public ExamController(CrudContext<Triangle.TestBank.Data.AppDbContext> context) : base(context)
         {
-            GeneratedForClassViewModel = context.ReflectionRepository.GetClassViewModel<Triangle.TestBank.Data.Models.Widget>();
+            GeneratedForClassViewModel = context.ReflectionRepository.GetClassViewModel<Triangle.TestBank.Data.Models.Exam>();
         }
 
         [HttpGet("get/{id}")]
         [Authorize]
-        public virtual Task<ItemResult<WidgetDtoGen>> Get(
+        public virtual Task<ItemResult<ExamDtoGen>> Get(
             int id,
             DataSourceParameters parameters,
-            IDataSource<Triangle.TestBank.Data.Models.Widget> dataSource)
+            IDataSource<Triangle.TestBank.Data.Models.Exam> dataSource)
             => GetImplementation(id, parameters, dataSource);
 
         [HttpGet("list")]
         [Authorize]
-        public virtual Task<ListResult<WidgetDtoGen>> List(
+        public virtual Task<ListResult<ExamDtoGen>> List(
             ListParameters parameters,
-            IDataSource<Triangle.TestBank.Data.Models.Widget> dataSource)
+            IDataSource<Triangle.TestBank.Data.Models.Exam> dataSource)
             => ListImplementation(parameters, dataSource);
 
         [HttpGet("count")]
         [Authorize]
         public virtual Task<ItemResult<int>> Count(
             FilterParameters parameters,
-            IDataSource<Triangle.TestBank.Data.Models.Widget> dataSource)
+            IDataSource<Triangle.TestBank.Data.Models.Exam> dataSource)
             => CountImplementation(parameters, dataSource);
 
         [HttpPost("save")]
         [Authorize]
-        public virtual Task<ItemResult<WidgetDtoGen>> Save(
-            [FromForm] WidgetDtoGen dto,
+        public virtual Task<ItemResult<ExamDtoGen>> Save(
+            [FromForm] ExamDtoGen dto,
             [FromQuery] DataSourceParameters parameters,
-            IDataSource<Triangle.TestBank.Data.Models.Widget> dataSource,
-            IBehaviors<Triangle.TestBank.Data.Models.Widget> behaviors)
+            IDataSource<Triangle.TestBank.Data.Models.Exam> dataSource,
+            IBehaviors<Triangle.TestBank.Data.Models.Exam> behaviors)
             => SaveImplementation(dto, parameters, dataSource, behaviors);
 
         [HttpPost("bulkSave")]
         [Authorize]
-        public virtual Task<ItemResult<WidgetDtoGen>> BulkSave(
+        public virtual Task<ItemResult<ExamDtoGen>> BulkSave(
             [FromBody] BulkSaveRequest dto,
             [FromQuery] DataSourceParameters parameters,
             [FromServices] IDataSourceFactory dataSourceFactory,
@@ -74,10 +74,10 @@ namespace Triangle.TestBank.Web.Api
 
         [HttpPost("delete/{id}")]
         [Authorize]
-        public virtual Task<ItemResult<WidgetDtoGen>> Delete(
+        public virtual Task<ItemResult<ExamDtoGen>> Delete(
             int id,
-            IBehaviors<Triangle.TestBank.Data.Models.Widget> behaviors,
-            IDataSource<Triangle.TestBank.Data.Models.Widget> dataSource)
+            IBehaviors<Triangle.TestBank.Data.Models.Exam> behaviors,
+            IDataSource<Triangle.TestBank.Data.Models.Exam> dataSource)
             => DeleteImplementation(id, new DataSourceParameters(), dataSource, behaviors);
     }
 }

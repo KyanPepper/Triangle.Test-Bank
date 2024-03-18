@@ -6,7 +6,7 @@ namespace Triangle.TestBank.Data;
 [Coalesce]
 public class AppDbContext : DbContext
 {
-    public DbSet<Widget> Widgets => Set<Widget>();
+    public DbSet<Exam> Exams => Set<Exam>();
 
     public AppDbContext() { }
 
