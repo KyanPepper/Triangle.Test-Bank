@@ -5,6 +5,9 @@
   "dataProject": {
     "projectFile": "./Triangle.TestBank.Data/Triangle.TestBank.Data.csproj"
   },
+  "testProject": {
+    "projectFile": "./Triangle.TestBank.Tests/Triangle.TestBank.Tests.csproj"
+  },
 
   "rootGenerator": "Vue",
 
