@@ -10,6 +10,7 @@ using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using Triangle.TestBank.Data;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Azure.Storage.Blobs;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -53,6 +54,14 @@ services
 
 services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddCookie();
+
+services.AddSingleton<BlobClient>(provider =>
+{
+    var envioConnectionString = Environment.GetEnvironmentVariable("AZURE_STORAGE_CONNECTION_STRING");
+    var envioContainerName = Environment.GetEnvironmentVariable("AZURE_CONTAINER");
+    var envioBlobName = Environment.GetEnvironmentVariable("AZURE_ACCOUNT");
+    return new BlobClient(connectionString:envioConnectionString,blobContainerName:envioContainerName, blobName:envioBlobName);
+});
 
 #endregion
 

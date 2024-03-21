@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Triangle.TestBank.Data.Models;
+using Triangle.TestBank.Data.Services;
 
 namespace Triangle.TestBank.Data;
 
