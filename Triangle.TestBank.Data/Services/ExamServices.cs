@@ -25,9 +25,9 @@ public class ExamServices(AppDbContext dbContext)
     {
         string uuid = Guid.NewGuid().ToString();
         string newBlobName = $"{name}_{uuid}.pdf";
-        var uploadedFileUri =  await blobStorageClient.UploadBlobAsync(blobName:newBlobName,content: file.OpenReadStream());
+        var uploadedFileUri = await blobStorageClient.UploadBlobAsync(blobName: newBlobName, content: file.OpenReadStream());
         string pdfPath = uploadedFileUri.ToString();
-        Exam exam = new Exam { Name = name, PdfPath = pdfPath,Subject=subject,Term = term};
+        Exam exam = new Exam { Name = name, PdfPath = pdfPath, Subject = subject, Term = term };
         dbContext.Add(exam);
         await dbContext.SaveChangesAsync();
         return exam;

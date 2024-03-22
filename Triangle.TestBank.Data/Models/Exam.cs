@@ -10,12 +10,12 @@ public class Exam
 
     public required Terms Term { get; set; }
 
-    public required  String PdfPath { get; set; }
+    public required String PdfPath { get; set; }
 
-    
+
 }
 
-public enum Subjects    
+public enum Subjects
 {
     CPTS,
     MATH,

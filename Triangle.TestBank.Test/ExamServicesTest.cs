@@ -32,12 +32,12 @@ namespace Triangle.TestBank.Test
             // Arrange
             var dbContextMock = new Mock<AppDbContext>();
 
-          
+
             var envioConnectionString = Environment.GetEnvironmentVariable("AZURE_STORAGE_CONNECTION_STRING");
             var envioContainerName = Environment.GetEnvironmentVariable("AZURE_CONTAINER");
             var blobClient = new BlobContainerClient(connectionString: envioConnectionString, blobContainerName: envioContainerName);
 
-            
+
             var formFile = new FormFile(new MemoryStream(), 0, 0, "file", "testfile.pdf");
 
             var examServices = new ExamServices(dbContextMock.Object);
