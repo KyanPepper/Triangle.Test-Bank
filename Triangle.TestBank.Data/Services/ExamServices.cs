@@ -10,7 +10,7 @@ using Triangle.TestBank.Data.Migrations;
 
 [Coalesce]
 [Service]
-public class ExamServices(AppDbContext dbContext, [Inject] BlobServiceClient blobStorageClient)
+public class ExamServices(AppDbContext dbContext, [Inject] BlobClient blobStorageClient)
 {
 
     [Coalesce]
