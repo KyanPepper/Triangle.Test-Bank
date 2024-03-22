@@ -6,6 +6,7 @@ using Triangle.TestBank.Data;
 using Azure.Storage.Blobs;
 using Triangle.TestBank.Data.Models;
 using Microsoft.AspNetCore.Http;
+using System.Diagnostics;
 
 namespace Triangle.TestBank.Test
 {
@@ -26,7 +27,7 @@ namespace Triangle.TestBank.Test
             Assert.Equal("Hello, World!", result);
         }
         [Fact]
-        public async Task PostExam_UploadsFileAndReturnsExam()
+        public async Task PostExamTest()
         {
             // Arrange
             var dbContextMock = new Mock<AppDbContext>();
@@ -34,8 +35,7 @@ namespace Triangle.TestBank.Test
           
             var envioConnectionString = Environment.GetEnvironmentVariable("AZURE_STORAGE_CONNECTION_STRING");
             var envioContainerName = Environment.GetEnvironmentVariable("AZURE_CONTAINER");
-            var envioBlobName = Environment.GetEnvironmentVariable("AZURE_ACCOUNT");
-            var blobClient = new BlobClient(connectionString: envioConnectionString, blobContainerName: envioContainerName, blobName: envioBlobName);
+            var blobClient = new BlobContainerClient(connectionString: envioConnectionString, blobContainerName: envioContainerName);
 
             
             var formFile = new FormFile(new MemoryStream(), 0, 0, "file", "testfile.pdf");
@@ -43,16 +43,16 @@ namespace Triangle.TestBank.Test
             var examServices = new ExamServices(dbContextMock.Object);
 
             // Act
-            Exam result = await examServices.PostExam(name: "Test 3", subject: Subjects.MATH, term: Terms.Spring2022, file: formFile, blobStorageClient: blobClient);
+            Exam result = await examServices.PostExam(name: "Test3", subject: Subjects.MATH, term: Terms.Spring2022, file: formFile, blobStorageClient: blobClient);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal("Test 3", result.Name);
+            Assert.Equal("Test3", result.Name);
             Assert.Equal(Subjects.MATH, result.Subject);
             Assert.Equal(Terms.Spring2022, result.Term);
             Assert.NotNull(result.PdfPath);
 
-
+            //added to fake db
             dbContextMock.Verify(x => x.Add(It.IsAny<Exam>()), Times.Once);
 
         }

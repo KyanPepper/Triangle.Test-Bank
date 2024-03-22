@@ -54,13 +54,20 @@ services
 
 services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddCookie();
-
+//keep just in case
 services.AddSingleton<BlobClient>(provider =>
 {
     var envioConnectionString = Environment.GetEnvironmentVariable("AZURE_STORAGE_CONNECTION_STRING");
     var envioContainerName = Environment.GetEnvironmentVariable("AZURE_CONTAINER");
     var envioBlobName = Environment.GetEnvironmentVariable("AZURE_ACCOUNT");
     return new BlobClient(connectionString:envioConnectionString,blobContainerName:envioContainerName, blobName:envioBlobName);
+});
+//Dependency inject contianer for services
+services.AddSingleton<BlobContainerClient>(provider =>
+{
+    var envioConnectionString = Environment.GetEnvironmentVariable("AZURE_STORAGE_CONNECTION_STRING");
+    var envioContainerName = Environment.GetEnvironmentVariable("AZURE_CONTAINER");
+    return new BlobContainerClient(connectionString: envioConnectionString, blobContainerName: envioContainerName);
 });
 
 #endregion
