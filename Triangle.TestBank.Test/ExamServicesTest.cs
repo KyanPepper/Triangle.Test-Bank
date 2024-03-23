@@ -7,13 +7,12 @@ using Azure.Storage.Blobs;
 using Triangle.TestBank.Data.Models;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
+using IntelliTect.Coalesce.Models;
 
 namespace Triangle.TestBank.Test
 {
     public class ExamServicesTest
     {
-
-
         [Fact]
         public void HealthTest()
         {
@@ -32,14 +31,12 @@ namespace Triangle.TestBank.Test
             // Arrange
             var dbContextMock = new Mock<AppDbContext>();
 
-
             var envioConnectionString = Environment.GetEnvironmentVariable("AZURE_STORAGE_CONNECTION_STRING");
             var envioContainerName = Environment.GetEnvironmentVariable("AZURE_CONTAINER");
             var blobClient = new BlobContainerClient(connectionString: envioConnectionString, blobContainerName: envioContainerName);
 
-
-            var formFile = new FormFile(new MemoryStream(), 0, 0, "file", "testfile.pdf");
-
+            var formFile = new FileModel { Content = new MemoryStream(), Length = 0, ContentType = "file", Name = "testfile.pdf" };
+           
             var examServices = new ExamServices(dbContextMock.Object);
 
             // Act
@@ -51,10 +48,17 @@ namespace Triangle.TestBank.Test
             Assert.Equal(Subjects.MATH, result.Subject);
             Assert.Equal(Terms.Spring2022, result.Term);
             Assert.NotNull(result.PdfPath);
-
             //added to fake db
             dbContextMock.Verify(x => x.Add(It.IsAny<Exam>()), Times.Once);
 
         }
+    }
+    public class FileModel : IFile
+    {
+        public Stream? Content { get; set; }
+        public string? ContentType { get; set; }
+        public string? Name { get; set; }
+        public long Length { get; set; }
+
     }
 }

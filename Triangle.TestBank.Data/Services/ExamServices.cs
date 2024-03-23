@@ -21,11 +21,12 @@ public class ExamServices(AppDbContext dbContext)
     }
 
     [Coalesce]
-    public async Task<Exam> PostExam(string name, Subjects subject, Terms term, IFormFile file, [Inject] BlobContainerClient blobStorageClient)
+    public async Task<Exam> PostExam(string name, Subjects subject, Terms term, IFile file, [Inject] BlobContainerClient blobStorageClient)
     {
+
         string uuid = Guid.NewGuid().ToString();
         string newBlobName = $"{name}_{uuid}.pdf";
-        var uploadedFileUri = await blobStorageClient.UploadBlobAsync(blobName: newBlobName, content: file.OpenReadStream());
+        var uploadedFileUri = await blobStorageClient.UploadBlobAsync(blobName: newBlobName, content: file.Content);
         string pdfPath = uploadedFileUri.ToString();
         Exam exam = new Exam { Name = name, PdfPath = pdfPath, Subject = subject, Term = term };
         dbContext.Add(exam);

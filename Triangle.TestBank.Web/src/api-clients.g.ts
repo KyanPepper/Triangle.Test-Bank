@@ -8,3 +8,26 @@ export class ExamApiClient extends ModelApiClient<$models.Exam> {
 }
 
 
+export class ExamServicesApiClient extends ServiceApiClient<typeof $metadata.ExamServices> {
+  constructor() { super($metadata.ExamServices) }
+  public healthCheck($config?: AxiosRequestConfig): AxiosPromise<ItemResult<string>> {
+    const $method = this.$metadata.methods.healthCheck
+    const $params =  {
+    }
+    return this.$invoke($method, $params, $config)
+  }
+  
+  public postExam(name: string | null, subject: $models.Subjects | null, term: $models.Terms | null, file: File | null, $config?: AxiosRequestConfig): AxiosPromise<ItemResult<$models.Exam>> {
+    const $method = this.$metadata.methods.postExam
+    const $params =  {
+      name,
+      subject,
+      term,
+      file,
+    }
+    return this.$invoke($method, $params, $config)
+  }
+  
+}
+
+

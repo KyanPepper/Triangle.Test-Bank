@@ -181,6 +181,75 @@ export const Exam = domain.types.Exam = {
   dataSources: {
   },
 }
+export const ExamServices = domain.services.ExamServices = {
+  name: "ExamServices",
+  displayName: "Exam Services",
+  type: "service",
+  controllerRoute: "ExamServices",
+  methods: {
+    healthCheck: {
+      name: "healthCheck",
+      displayName: "Health Check",
+      transportType: "item",
+      httpMethod: "POST",
+      params: {
+      },
+      return: {
+        name: "$return",
+        displayName: "Result",
+        type: "string",
+        role: "value",
+      },
+    },
+    postExam: {
+      name: "postExam",
+      displayName: "Post Exam",
+      transportType: "item",
+      httpMethod: "POST",
+      params: {
+        name: {
+          name: "name",
+          displayName: "Name",
+          type: "string",
+          role: "value",
+          rules: {
+            required: val => (val != null && val !== '') || "Name is required.",
+          }
+        },
+        subject: {
+          name: "subject",
+          displayName: "Subject",
+          type: "enum",
+          get typeDef() { return domain.enums.Subjects },
+          role: "value",
+        },
+        term: {
+          name: "term",
+          displayName: "Term",
+          type: "enum",
+          get typeDef() { return domain.enums.Terms },
+          role: "value",
+        },
+        file: {
+          name: "file",
+          displayName: "File",
+          type: "file",
+          role: "value",
+          rules: {
+            required: val => val != null || "File is required.",
+          }
+        },
+      },
+      return: {
+        name: "$return",
+        displayName: "Result",
+        type: "model",
+        get typeDef() { return (domain.types.Exam as ModelType) },
+        role: "value",
+      },
+    },
+  },
+}
 
 interface AppDomain extends Domain {
   enums: {
@@ -191,6 +260,7 @@ interface AppDomain extends Domain {
     Exam: typeof Exam
   }
   services: {
+    ExamServices: typeof ExamServices
   }
 }
 

@@ -26,6 +26,36 @@ export class ExamListViewModel extends ListViewModel<$models.Exam, $apiClients.E
 }
 
 
+export class ExamServicesViewModel extends ServiceViewModel<typeof $metadata.ExamServices, $apiClients.ExamServicesApiClient> {
+  
+  public get healthCheck() {
+    const healthCheck = this.$apiClient.$makeCaller(
+      this.$metadata.methods.healthCheck,
+      (c) => c.healthCheck(),
+      () => ({}),
+      (c, args) => c.healthCheck())
+    
+    Object.defineProperty(this, 'healthCheck', {value: healthCheck});
+    return healthCheck
+  }
+  
+  public get postExam() {
+    const postExam = this.$apiClient.$makeCaller(
+      this.$metadata.methods.postExam,
+      (c, name: string | null, subject: $models.Subjects | null, term: $models.Terms | null, file: File | null) => c.postExam(name, subject, term, file),
+      () => ({name: null as string | null, subject: null as $models.Subjects | null, term: null as $models.Terms | null, file: null as File | null, }),
+      (c, args) => c.postExam(args.name, args.subject, args.term, args.file))
+    
+    Object.defineProperty(this, 'postExam', {value: postExam});
+    return postExam
+  }
+  
+  constructor() {
+    super($metadata.ExamServices, new $apiClients.ExamServicesApiClient())
+  }
+}
+
+
 const viewModelTypeLookup = ViewModel.typeLookup = {
   Exam: ExamViewModel,
 }
@@ -33,5 +63,6 @@ const listViewModelTypeLookup = ListViewModel.typeLookup = {
   Exam: ExamListViewModel,
 }
 const serviceViewModelTypeLookup = ServiceViewModel.typeLookup = {
+  ExamServices: ExamServicesViewModel,
 }
 
