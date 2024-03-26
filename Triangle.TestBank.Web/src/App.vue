@@ -1,26 +1,16 @@
 <template>
   <v-app id="vue-app">
-    <v-app-bar color="primary" density="compact">
+    <v-app-bar  color="red" density="compact">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>
         <router-link to="/" style="color: inherit">
-          Coalesce Vue Template
+          WSU Triangle Fratnerity Test Bank
         </router-link>
       </v-toolbar-title>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer">
       <v-list>
         <v-list-item to="/" prepend-icon="fas fa-home" title="Home" />
-        <v-list-item
-          to="/widget"
-          prepend-icon="fas fa-palette"
-          title="Custom Page Example"
-        />
-        <v-list-item
-          to="/admin"
-          prepend-icon="fas fa-cogs"
-          title="Admin Pages"
-        />
       </v-list>
     </v-navigation-drawer>
 
@@ -48,5 +38,11 @@ const drawer = ref<boolean | null>(null);
 .router-transition-enter-from,
 .router-transition-leave-to {
   opacity: 0;
+}
+
+.navtri {
+  color: red;
+  align-self: center;
+  justify-content: center;
 }
 </style>
