@@ -1,5 +1,9 @@
 <template>
-  <ExamCard />
+  
+    <div>
+      <ExamCard v-for="exam in examList" :key="exam.examId" :name="exam.name" :term="exam.term" :subject="exam.subject" :pdf="exam.pdfPath"></ExamCard>
+    </div>
+ 
 </template>
 
 <script setup lang="ts">
