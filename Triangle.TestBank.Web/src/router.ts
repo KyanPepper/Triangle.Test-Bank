@@ -10,6 +10,12 @@ export default createRouter({
       component: () => import("./views/Home.vue"),
     },
     {
+      path: "/uploadExam",
+      name: "UploadExam",
+      component: () => import("./views/Upload.vue"),
+    },
+
+    {
       path: "/admin",
       name: "admin",
       component: () => import("./views/Admin.vue"),

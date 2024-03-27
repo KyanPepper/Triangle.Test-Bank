@@ -4,13 +4,16 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>
         <router-link to="/" style="color: inherit">
-          WSU Triangle Fratnerity Test Bank
+          WSU Triangle Fraternity Test Bank
         </router-link>
       </v-toolbar-title>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer">
       <v-list>
-        <v-list-item to="/" prepend-icon="fas fa-home" title="Home" />
+        <v-list-item to="/" prepend-icon="fas fa-home" title="Exams" />
+      </v-list>
+      <v-list>
+        <v-list-item to="/uploadExam" prepend-icon="fa fa-cloud-upload" title="Upload Exam" />
       </v-list>
     </v-navigation-drawer>
 
