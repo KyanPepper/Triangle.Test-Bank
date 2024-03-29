@@ -63,10 +63,11 @@ export default defineComponent({
     const uploadExam = async () => {
       let pdfArg: File[] = toRaw(examState.value.pdf);
       console.log(pdfArg);
+
       const client = new ExamServicesApiClient();
       let subArg = SubjectToNum(examState.value.subject);
       let termArg = TermToNum(examState.value.term);
-      const response = await client.$makeCaller("item", (methods) => methods.postExam(examState.value.name, subArg, termArg, pdfArg[0] as File));
+      const response = await client.$makeCaller("item", (methods) => methods.postExam(examState.value.name, subArg, termArg, pdfArg[0]));
       await response();
       console.log(response);
     };

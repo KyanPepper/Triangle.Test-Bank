@@ -23,11 +23,10 @@ public class ExamServices(AppDbContext dbContext)
     [Coalesce]
     public async Task<Exam> PostExam(string name, Subjects subject, Terms term, IFile file, [Inject] BlobContainerClient blobStorageClient)
     {
-
         string uuid = Guid.NewGuid().ToString();
         string newBlobName = $"{name}_{uuid}.pdf";
-        var uploadedFileUri = await blobStorageClient.UploadBlobAsync(blobName: newBlobName, content: file.Content);
-        string pdfPath = uploadedFileUri.ToString();
+        await blobStorageClient.UploadBlobAsync(blobName: newBlobName, content: file.Content);
+        string pdfPath = blobStorageClient.GetBlobClient(newBlobName).Uri.ToString();
         Exam exam = new Exam { Name = name, PdfPath = pdfPath, Subject = subject, Term = term };
         dbContext.Add(exam);
         await dbContext.SaveChangesAsync();

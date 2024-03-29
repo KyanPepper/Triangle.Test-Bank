@@ -27,6 +27,7 @@ onMounted(async () => {
   const response = client.$makeCaller("list", (methods) => methods.list());
   await response();
   examList.value = response.result as Exam[];
+
   console.log(examList.value);
 });
 

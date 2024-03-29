@@ -1,7 +1,7 @@
 <template>
   <v-card class="flex">
     <div>
-      <embed style="width: auto; height: auto" :src="pdf" />
+      <embed type="application/pdf" style="width: auto; height: auto" :src="'https://drive.google.com/viewerng/viewer?embedded=true&url='+ pdf " />
     </div>
     <v-card-title>
       <span class="text-h5">{{ name }}</span>
