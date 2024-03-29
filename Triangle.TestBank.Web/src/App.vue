@@ -10,7 +10,7 @@
     </v-app-bar>
     <v-navigation-drawer v-model="drawer">
       <v-list>
-        <v-list-item to="/" prepend-icon="fas fa-home" title="Exams" />
+        <v-list-item to="/" prepend-icon="fa fa-calculator" title="Exams" />
       </v-list>
       <v-list>
         <v-list-item to="/uploadExam" prepend-icon="fa fa-cloud-upload" title="Upload Exam" />

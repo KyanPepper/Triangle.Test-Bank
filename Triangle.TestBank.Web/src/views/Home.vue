@@ -1,7 +1,13 @@
 <template>
   <div class="exam-card-container">
-    <ExamCard v-for="exam in examList" :key="exam.examId" :name="exam.name" :term="TermToText(Number(exam.term))"
-      :subject="SubjectToText(Number(exam.subject))" :pdf="exam.pdfPath"></ExamCard>
+    <ExamCard
+      v-for="exam in examList"
+      :key="exam.examId"
+      :name="exam.name"
+      :term="TermToText(Number(exam.term))"
+      :subject="SubjectToText(Number(exam.subject))"
+      :pdf="exam.pdfPath"
+    ></ExamCard>
   </div>
 </template>
 
@@ -22,14 +28,9 @@ import { TermToText, SubjectToText } from "@/helperfunctions";
 const examList = ref<Exam[]>([]);
 
 onMounted(async () => {
-  console.log("Home page mounted");
   const client = new ExamApiClient();
   const response = client.$makeCaller("list", (methods) => methods.list());
   await response();
   examList.value = response.result as Exam[];
-
-  console.log(examList.value);
 });
-
-
 </script>

@@ -1,7 +1,13 @@
 <template>
   <v-card class="flex">
     <div>
-      <embed type="application/pdf" style="width: auto; height: auto" :src="'https://drive.google.com/viewerng/viewer?embedded=true&url='+ pdf " />
+      <embed
+        type="application/pdf"
+        style="width: auto; height: auto"
+        :src="
+          'https://drive.google.com/viewerng/viewer?embedded=true&url=' + pdf
+        "
+      />
     </div>
     <v-card-title>
       <span class="text-h5">{{ name }}</span>
@@ -40,7 +46,6 @@ export default {
   },
   methods: {
     DownloadPdf() {
-      console.log("Download clicked");
       const link = document.createElement("a");
       link.href = this.pdf;
       link.setAttribute("download", "");
