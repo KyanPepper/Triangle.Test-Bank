@@ -50,3 +50,57 @@ export function TermToText(enumValue: number): string {
       return "Unknown";
   }
 }
+export function SubjectToNum(textValue: string | null): number {
+    switch (textValue) {
+        case "CPTS":
+            return 0;
+        case "MATH":
+            return 1;
+        case "ENGR":
+            return 2;
+        case "PHYS":
+            return 3;
+        case "CHEM":
+            return 4;
+        case "BIO":
+            return 5;
+        case "EE":
+            return 6;
+        case "ME":
+            return 7;
+        case "CE":
+            return 8;
+        case "MSE":
+            return 9;
+        case "STAT":
+            return 10;
+        case "CSTM":
+            return 11;
+        default:
+            return -1;
+    }
+}
+
+export function TermToNum(textValue: string | null): number {
+    switch (textValue) {
+        case "Fall 2021":
+            return 0;
+        case "Spring 2021":
+            return 1;
+        case "Fall 2022":
+            return 2;
+        case "Spring 2022":
+            return 3;
+        case "Fall 2023":
+            return 4;
+        case "Spring 2023":
+            return 5;
+        case "Fall 2024":
+            return 6;
+        case "Spring 2024":
+            return 7;
+        default:
+            return -1;
+    }
+}
+

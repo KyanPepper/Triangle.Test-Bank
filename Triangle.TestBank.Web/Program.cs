@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using Triangle.TestBank.Data;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Azure.Storage.Blobs;
+using Triangle.TestBank.Data.Services;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -69,6 +70,7 @@ services.AddSingleton<BlobContainerClient>(provider =>
     var envioContainerName = Environment.GetEnvironmentVariable("AZURE_CONTAINER");
     return new BlobContainerClient(connectionString: envioConnectionString, blobContainerName: envioContainerName);
 });
+services.AddScoped<ExamServices>();
 
 #endregion
 

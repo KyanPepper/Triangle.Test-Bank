@@ -3,7 +3,7 @@
     <VForm class="h-full">
       <VTextField v-model="examState.name" label="Exam Name" required />
       <v-select v-model="examState.subject" :items="subjectItems" label="Subject" required />
-      <v-select v-model="examState.term" label="Term" required :items="termItems"/>
+      <v-select v-model="examState.term" label="Term" required :items="termItems" />
       <VFileInput v-model="examState.pdf" label="Exam File" required />
       <VBtn color="primary" @click="uploadExam">
         Upload Exam
@@ -13,16 +13,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { TermToText,SubjectToText } from '@/helperfunctions';
-
+import { defineComponent, ref, toRaw } from 'vue';
+import { TermToNum, SubjectToNum } from '@/helperfunctions';
+import { ExamServicesApiClient } from '@/api-clients.g';
 
 
 interface ExamModel {
   name: string;
   subject: string | null;
   term: string | null;
-  pdf: any | null;
+  pdf: File[];
 }
 
 export default defineComponent({
@@ -32,7 +32,7 @@ export default defineComponent({
       name: '',
       subject: null,
       term: null,
-      pdf: null
+      pdf: []
     });
     const subjectItems = [
       "CPTS",
@@ -60,9 +60,15 @@ export default defineComponent({
       "Spring 2024",
     ];
 
-    const uploadExam = () => {
-      console.log('Upload exam clicked');
-      console.log(examState.value.pdf);
+    const uploadExam = async () => {
+      let pdfArg: File[] = toRaw(examState.value.pdf);
+      console.log(pdfArg);
+      const client = new ExamServicesApiClient();
+      let subArg = SubjectToNum(examState.value.subject);
+      let termArg = TermToNum(examState.value.term);
+      const response = await client.$makeCaller("item", (methods) => methods.postExam(examState.value.name, subArg, termArg, pdfArg[0] as File));
+      await response();
+      console.log(response);
     };
 
     return {

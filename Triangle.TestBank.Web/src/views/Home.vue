@@ -1,13 +1,7 @@
 <template>
   <div class="exam-card-container">
-    <ExamCard
-      v-for="exam in examList"
-      :key="exam.examId"
-      :name="exam.name"
-      :term="TermToText(Number(exam.term))"
-      :subject="SubjectToText(Number(exam.subject))"
-      :pdf="exam.pdfPath"
-    ></ExamCard>
+    <ExamCard v-for="exam in examList" :key="exam.examId" :name="exam.name" :term="TermToText(Number(exam.term))"
+      :subject="SubjectToText(Number(exam.subject))" :pdf="exam.pdfPath"></ExamCard>
   </div>
 </template>
 
@@ -24,7 +18,7 @@
 import { ref, onMounted } from "vue";
 import { ExamApiClient } from "@/api-clients.g";
 import { Exam } from "@/models.g";
-import { TermToText, SubjectToText } from "../helperfunctions";
+import { TermToText, SubjectToText } from "@/helperfunctions";
 const examList = ref<Exam[]>([]);
 
 onMounted(async () => {
@@ -38,4 +32,3 @@ onMounted(async () => {
 
 
 </script>
-../helperfunctions
