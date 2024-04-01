@@ -5,8 +5,7 @@
         type="application/pdf"
         style="width: auto; height: auto"
         :src="
-          'https://drive.google.com/viewerng/viewer?embedded=true&url=' + pdf
-        "
+          'https://drive.google.com/viewerng/viewer?embedded=true&url=' + pdf"
       />
     </div>
     <v-card-title>

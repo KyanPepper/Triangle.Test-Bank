@@ -14,6 +14,11 @@ export default createRouter({
       name: "UploadExam",
       component: () => import("./views/Upload.vue"),
     },
+    {
+      path: "/login",
+      name: "Login",
+      component: () => import("./views/Login.vue"),
+    },
 
     {
       path: "/admin",
@@ -34,6 +39,7 @@ export default createRouter({
       component: titledAdminPage(CAdminEditorPage),
       props: true,
     },
+    
   ],
 });
 

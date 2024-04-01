@@ -11,10 +11,12 @@
     <v-navigation-drawer v-model="drawer">
       <v-list>
         <v-list-item to="/" prepend-icon="fa fa-calculator" title="Exams" />
-      </v-list>
-      <v-list>
         <v-list-item to="/uploadExam" prepend-icon="fa fa-cloud-upload" title="Upload Exam" />
+        <v-list-item to="/login" prepend-icon="fa fa-sign-in-alt" title="Login" />
       </v-list>
+     
+        
+      
     </v-navigation-drawer>
 
     <v-main>
