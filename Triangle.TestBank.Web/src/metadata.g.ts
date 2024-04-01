@@ -248,6 +248,29 @@ export const ExamServices = domain.services.ExamServices = {
         role: "value",
       },
     },
+    checkPassCode: {
+      name: "checkPassCode",
+      displayName: "Check Pass Code",
+      transportType: "item",
+      httpMethod: "POST",
+      params: {
+        userInput: {
+          name: "userInput",
+          displayName: "User Input",
+          type: "string",
+          role: "value",
+          rules: {
+            required: val => (val != null && val !== '') || "User Input is required.",
+          }
+        },
+      },
+      return: {
+        name: "$return",
+        displayName: "Result",
+        type: "boolean",
+        role: "value",
+      },
+    },
   },
 }
 

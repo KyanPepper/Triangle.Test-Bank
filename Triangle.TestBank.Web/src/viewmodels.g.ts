@@ -50,6 +50,17 @@ export class ExamServicesViewModel extends ServiceViewModel<typeof $metadata.Exa
     return postExam
   }
   
+  public get checkPassCode() {
+    const checkPassCode = this.$apiClient.$makeCaller(
+      this.$metadata.methods.checkPassCode,
+      (c, userInput: string | null) => c.checkPassCode(userInput),
+      () => ({userInput: null as string | null, }),
+      (c, args) => c.checkPassCode(args.userInput))
+    
+    Object.defineProperty(this, 'checkPassCode', {value: checkPassCode});
+    return checkPassCode
+  }
+  
   constructor() {
     super($metadata.ExamServices, new $apiClients.ExamServicesApiClient())
   }

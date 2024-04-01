@@ -52,6 +52,20 @@ namespace Triangle.TestBank.Test
             dbContextMock.Verify(x => x.Add(It.IsAny<Exam>()), Times.Once);
 
         }
+        [Fact]
+        public async Task CheckPassCodeTest()
+        {
+            // Arrange
+            var dbContextMock = new Mock<AppDbContext>();
+            var examServices = new ExamServices(dbContextMock.Object);
+            string password = "Test Password";
+            // Act
+            bool result = await examServices.CheckPassCode("1234", password);
+            bool result2 = await examServices.CheckPassCode("Test Password", password);
+            // Assert
+            Assert.False(result);
+            Assert.True(result2);
+        }
     }
     public class FileModel : IFile
     {

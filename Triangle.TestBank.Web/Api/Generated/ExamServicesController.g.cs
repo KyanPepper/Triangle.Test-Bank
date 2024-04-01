@@ -89,5 +89,35 @@ namespace Triangle.TestBank.Web.Api
             _result.Object = Mapper.MapToDto<Triangle.TestBank.Data.Models.Exam, ExamDtoGen>(_methodResult, _mappingContext, includeTree);
             return _result;
         }
+
+        /// <summary>
+        /// Method: CheckPassCode
+        /// </summary>
+        [HttpPost("CheckPassCode")]
+        [Authorize]
+        public virtual async Task<ItemResult<bool>> CheckPassCode(
+            [FromServices] string pass,
+            [FromForm(Name = "userInput")] string userInput)
+        {
+            var _params = new
+            {
+                userInput = userInput
+            };
+
+            if (Context.Options.ValidateAttributesForMethods)
+            {
+                var _validationResult = ItemResult.FromParameterValidation(
+                    GeneratedForClassViewModel!.MethodByName("CheckPassCode"), _params, HttpContext.RequestServices);
+                if (!_validationResult.WasSuccessful) return new ItemResult<bool>(_validationResult);
+            }
+
+            var _methodResult = await Service.CheckPassCode(
+                _params.userInput,
+                pass
+            );
+            var _result = new ItemResult<bool>();
+            _result.Object = _methodResult;
+            return _result;
+        }
     }
 }

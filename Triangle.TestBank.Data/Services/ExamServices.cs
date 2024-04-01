@@ -32,4 +32,9 @@ public class ExamServices(AppDbContext dbContext)
         await dbContext.SaveChangesAsync();
         return exam;
     }
+    [Coalesce]
+    public async Task<bool> CheckPassCode(string userInput, [Inject] string pass)
+    {
+        return userInput == pass;
+    }
 }

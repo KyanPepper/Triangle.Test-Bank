@@ -28,6 +28,14 @@ export class ExamServicesApiClient extends ServiceApiClient<typeof $metadata.Exa
     return this.$invoke($method, $params, $config)
   }
   
+  public checkPassCode(userInput: string | null, $config?: AxiosRequestConfig): AxiosPromise<ItemResult<boolean>> {
+    const $method = this.$metadata.methods.checkPassCode
+    const $params =  {
+      userInput,
+    }
+    return this.$invoke($method, $params, $config)
+  }
+  
 }
 
 
