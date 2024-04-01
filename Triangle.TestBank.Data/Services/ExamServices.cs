@@ -32,7 +32,4 @@ public class ExamServices(AppDbContext dbContext)
         await dbContext.SaveChangesAsync();
         return exam;
     }
-
-
-
 }

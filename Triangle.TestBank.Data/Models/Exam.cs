@@ -3,11 +3,11 @@ namespace Triangle.TestBank.Data.Models;
 public class Exam
 {
     public int ExamId { get; set; }
-
+    [Search]
     public required string Name { get; set; }
-
+    [Search]
     public required Subjects Subject { get; set; }
-
+    [Search]
     public required Terms Term { get; set; }
 
     public required String PdfPath { get; set; }
