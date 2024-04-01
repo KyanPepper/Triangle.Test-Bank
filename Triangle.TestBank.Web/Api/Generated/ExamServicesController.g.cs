@@ -95,7 +95,7 @@ namespace Triangle.TestBank.Web.Api
         /// </summary>
         [HttpPost("CheckPassCode")]
         [Authorize]
-        public virtual async Task<ItemResult<bool>> CheckPassCode(
+        public virtual ItemResult<bool> CheckPassCode(
             [FromServices] string pass,
             [FromForm(Name = "userInput")] string userInput)
         {
@@ -111,7 +111,7 @@ namespace Triangle.TestBank.Web.Api
                 if (!_validationResult.WasSuccessful) return new ItemResult<bool>(_validationResult);
             }
 
-            var _methodResult = await Service.CheckPassCode(
+            var _methodResult = Service.CheckPassCode(
                 _params.userInput,
                 pass
             );

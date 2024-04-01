@@ -33,7 +33,7 @@ public class ExamServices(AppDbContext dbContext)
         return exam;
     }
     [Coalesce]
-    public async Task<bool> CheckPassCode(string userInput, [Inject] string pass)
+    public bool CheckPassCode(string userInput, [Inject] string pass)
     {
         return userInput == pass;
     }

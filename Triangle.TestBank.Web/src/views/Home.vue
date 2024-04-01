@@ -43,14 +43,17 @@ import { ExamApiClient } from "@/api-clients.g";
 import { Exam } from "@/models.g";
 import { TermToText, SubjectToText } from "@/helperfunctions";
 import { VTextField } from "vuetify/lib/components/index.mjs";
+
 const examList = ref<Exam[]>([]);
 const searchQuery = ref<string>("");
+
 onMounted(async () => {
   const client = new ExamApiClient();
   const response = client.$makeCaller("list", (methods) => methods.list());
   await response();
   examList.value = response.result as Exam[];
 });
+
 let filteredExams = computed(() => {
   return examList.value.filter(exam => {
     return exam.name && exam.name.toLowerCase().includes(searchQuery.value.toLowerCase());
