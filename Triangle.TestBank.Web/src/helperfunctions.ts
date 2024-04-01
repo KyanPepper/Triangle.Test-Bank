@@ -129,3 +129,17 @@ export const termItems = [
   "Fall 2024",
   "Spring 2024",
 ];
+
+export function GetCookie(cookieName:String) {
+  const cookieString = document.cookie;
+  const cookies = cookieString.split("; ");
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i];
+    const [name, value] = cookie.split("=");
+    if (name === cookieName) {
+ 
+      return decodeURIComponent(value);
+    }
+  }
+  return null;
+}

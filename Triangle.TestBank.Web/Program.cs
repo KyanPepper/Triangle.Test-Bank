@@ -70,7 +70,7 @@ services.AddSingleton<BlobContainerClient>(provider =>
     var envioContainerName = Environment.GetEnvironmentVariable("AZURE_CONTAINER");
     return new BlobContainerClient(connectionString: envioConnectionString, blobContainerName: envioContainerName);
 });
-services.AddSingleton<string>(provider =>
+services.AddScoped<string>(provider =>
 {
     return Environment.GetEnvironmentVariable("BankPass");
 });

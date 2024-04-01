@@ -60,8 +60,8 @@ namespace Triangle.TestBank.Test
             var examServices = new ExamServices(dbContextMock.Object);
             string password = "Test Password";
             // Act
-            bool result = await examServices.CheckPassCode("1234", password);
-            bool result2 = await examServices.CheckPassCode("Test Password", password);
+            bool result =  examServices.CheckPassCode("1234", password);
+            bool result2 =  examServices.CheckPassCode("Test Password", password);
             // Assert
             Assert.False(result);
             Assert.True(result2);

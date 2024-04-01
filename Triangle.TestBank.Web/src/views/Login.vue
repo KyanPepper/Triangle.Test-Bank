@@ -11,10 +11,14 @@
                 label="Password"
                 outlined
                 clearable
-                placeholder="Password"
-                type="password"
+                placeholder="Enter Password"
               ></v-text-field>
-              <v-btn @click="login" color="red">Login</v-btn>
+              <v-btn v-if="isLoggedIn != 'true'" @click="Login" color="red"
+                >Login</v-btn
+              >
+              <VAlert v-if="isLoggedIn == 'true'" type="success">
+                Logged In Successfully
+              </VAlert>
             </v-form>
           </v-card-text>
         </v-card>
@@ -24,18 +28,25 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent } from "vue";
 import { ExamServicesApiClient } from "@/api-clients.g";
+import { GetCookie } from "@/helperfunctions";
 const userInput = ref<string>("");
-const login = async () => {
+let isLoggedIn: string | null = GetCookie("loggedIn");
+
+let Login = async () => {
   const client = new ExamServicesApiClient();
   const response = await client.$makeCaller("item", (methods) =>
     methods.checkPassCode(userInput.value),
   );
-  if (response.result == true) {
-    console.log("Login Successful");
+  await response();
+
+  if (response.result === true) {
+    let expirationDate: Date = new Date();
+    expirationDate.setTime(expirationDate.getTime() + 24 * 60 * 60 * 1000);
+    document.cookie = `loggedIn=true; expires=${expirationDate.toUTCString()}; path=/`;
+    isLoggedIn = "true";
   } else {
-    console.log("Login Failed");
+    console.log("Wrong Password");
   }
 };
 </script>

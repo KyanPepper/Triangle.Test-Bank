@@ -43,7 +43,6 @@ import { ExamApiClient } from "@/api-clients.g";
 import { Exam } from "@/models.g";
 import { TermToText, SubjectToText } from "@/helperfunctions";
 import { VTextField } from "vuetify/lib/components/index.mjs";
-
 const examList = ref<Exam[]>([]);
 const searchQuery = ref<string>("");
 
