@@ -1,7 +1,7 @@
-# Triangle Test Bank (Iteration #1)
+# Triangle Test Bank (Iteration #2)
 ## Programer: Kyan Kotschevar-Smead
 
-Demo: https://www.youtube.com/watch?v=DahI0efE69U&ab_channel=KyanKotschevar-Smead
+Demo: https://youtu.be/wWC_pJnlTGE
 
 Triangle Test Bank is a web application designed to serve as a test bank for WSU Triangle fraternity members, providing a platform for uploading and accessing previous exams. This project is intended for demonstration purposes only and is still being worked on.
 
@@ -9,6 +9,8 @@ Triangle Test Bank is a web application designed to serve as a test bank for WSU
 
 - **Exam Upload**: Members can upload their exams to the platform securely.
 - **Exam Viewing**: Users can view and download exams uploaded by other members, providing access to previous years' exams.
+- **Member Auth**: Only authorized users with the secret password can use the features
+
 
 - **Technology Stack**: Built with Coalesce which facilitates .NET for backend development, Vue.js for frontend, MySQL for database management, and Azure Blob Storage for secure file storage.
 
