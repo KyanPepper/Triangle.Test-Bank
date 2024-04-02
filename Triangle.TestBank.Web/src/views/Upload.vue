@@ -22,8 +22,31 @@
         Exam Uploaded Successfully
       </VAlert>
     </VForm>
+    <div class="overlay" v-if="isLoggedIn !== 'true'">
+      <LockedScreen class="center-lock"> </LockedScreen>
+    </div>
   </VContainer>
 </template>
+
+<style>
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-lock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>
 
 <script lang="ts">
 import { defineComponent, ref, toRaw } from "vue";
@@ -32,6 +55,7 @@ import {
   SubjectToNum,
   subjectItems,
   termItems,
+  GetCookie,
 } from "@/helperfunctions";
 import { ExamServicesApiClient } from "@/api-clients.g";
 
@@ -44,6 +68,10 @@ interface ExamModel {
 
 export default defineComponent({
   setup() {
+    let isLoggedIn = ref<string | null>("");
+    onMounted(() => {
+      isLoggedIn.value = GetCookie("loggedIn");
+    });
     const examState = ref<ExamModel>({
       name: "",
       subject: null,
@@ -72,6 +100,7 @@ export default defineComponent({
       subjectItems,
       termItems,
       uploadDone,
+      isLoggedIn,
     };
   },
 });

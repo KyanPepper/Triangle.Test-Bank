@@ -20,7 +20,6 @@
               <VAlert v-if="isLoggedIn == 'true'" type="success">
                 Logged In Successfully
               </VAlert>
-
             </v-form>
           </v-card-text>
         </v-card>
@@ -34,12 +33,11 @@ import { ExamServicesApiClient } from "@/api-clients.g";
 import { GetCookie } from "@/helperfunctions";
 
 const userInput = ref<string>("");
-let isLoggedIn = ref<string|null>('');
-
+let isLoggedIn = ref<string | null>("");
 
 onMounted(() => {
   isLoggedIn.value = GetCookie("loggedIn");
-})
+});
 
 let Login = async () => {
   const client = new ExamServicesApiClient();
@@ -56,5 +54,4 @@ let Login = async () => {
     alert("Incorrect Password");
   }
 };
-
 </script>
