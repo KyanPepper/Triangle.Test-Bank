@@ -36,7 +36,7 @@ namespace Triangle.TestBank.Test
             var blobClient = new BlobContainerClient(connectionString: envioConnectionString, blobContainerName: envioContainerName);
 
             var formFile = new FileModel { Content = new MemoryStream(), Length = 0, ContentType = "file", Name = "testfile.pdf" };
-           
+
             var examServices = new ExamServices(dbContextMock.Object);
 
             // Act
@@ -53,15 +53,15 @@ namespace Triangle.TestBank.Test
 
         }
         [Fact]
-        public async Task CheckPassCodeTest()
+        public void CheckPassCodeTest()
         {
             // Arrange
             var dbContextMock = new Mock<AppDbContext>();
             var examServices = new ExamServices(dbContextMock.Object);
             string password = "Test Password";
             // Act
-            bool result =  examServices.CheckPassCode("1234", password);
-            bool result2 =  examServices.CheckPassCode("Test Password", password);
+            bool result = examServices.CheckPassCode("1234", password);
+            bool result2 = examServices.CheckPassCode("Test Password", password);
             // Assert
             Assert.False(result);
             Assert.True(result2);

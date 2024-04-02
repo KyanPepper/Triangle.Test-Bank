@@ -19,26 +19,6 @@ export default createRouter({
       name: "Login",
       component: () => import("./views/Login.vue"),
     },
-
-    {
-      path: "/admin",
-      name: "admin",
-      component: () => import("./views/Admin.vue"),
-    },
-
-    // Coalesce admin routes
-    {
-      path: "/admin/:type",
-      name: "coalesce-admin-list",
-      component: titledAdminPage(CAdminTablePage),
-      props: true,
-    },
-    {
-      path: "/admin/:type/edit/:id?",
-      name: "coalesce-admin-item",
-      component: titledAdminPage(CAdminEditorPage),
-      props: true,
-    },
     
   ],
 });
