@@ -12,13 +12,15 @@
                 outlined
                 clearable
                 placeholder="Enter Password"
+                type="password"
               ></v-text-field>
-              <v-btn v-if="isLoggedIn != 'true'" @click="Login" color="red"
+              <v-btn v-if="isLoggedIn !== 'true'" @click="Login" color="red"
                 >Login</v-btn
               >
               <VAlert v-if="isLoggedIn == 'true'" type="success">
                 Logged In Successfully
               </VAlert>
+
             </v-form>
           </v-card-text>
         </v-card>
@@ -30,8 +32,14 @@
 <script setup lang="ts">
 import { ExamServicesApiClient } from "@/api-clients.g";
 import { GetCookie } from "@/helperfunctions";
+
 const userInput = ref<string>("");
-let isLoggedIn: string | null = GetCookie("loggedIn");
+let isLoggedIn = ref<string|null>('');
+
+
+onMounted(() => {
+  isLoggedIn.value = GetCookie("loggedIn");
+})
 
 let Login = async () => {
   const client = new ExamServicesApiClient();
@@ -39,14 +47,14 @@ let Login = async () => {
     methods.checkPassCode(userInput.value),
   );
   await response();
-
   if (response.result === true) {
     let expirationDate: Date = new Date();
     expirationDate.setTime(expirationDate.getTime() + 24 * 60 * 60 * 1000);
     document.cookie = `loggedIn=true; expires=${expirationDate.toUTCString()}; path=/`;
-    isLoggedIn = "true";
+    isLoggedIn.value = "true";
   } else {
-    console.log("Wrong Password");
+    alert("Incorrect Password");
   }
 };
+
 </script>
