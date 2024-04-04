@@ -34,7 +34,7 @@ builder.Configuration
 var services = builder.Services;
 
 services.AddDbContext<AppDbContext>(options => options
-    .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), opt => opt
+    .UseSqlServer(builder.Configuration.GetConnectionString("AzureConnection"), opt => opt
         .EnableRetryOnFailure()
         .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
     )
