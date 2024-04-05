@@ -19,8 +19,8 @@ jobs:
       - name: Install dependencies and build TypeScript
         run: |
           cd Triangle.TestBank.Web
-          npm install
-          npm run build
+          npm ci
+          cd ..
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
