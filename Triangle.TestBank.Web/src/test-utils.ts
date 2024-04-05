@@ -1,3 +1,4 @@
+/*
 import { createCoalesceVuetify } from "coalesce-vue-vuetify3";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { ArgumentsType } from "vitest";
@@ -38,4 +39,4 @@ const mountComponent = function (
 export { nextTick } from "vue";
 export { flushPromises } from "@vue/test-utils";
 export { mockEndpoint } from "coalesce-vue/lib/test-utils";
-export { mountComponent as mount };
+export { mountComponent as mount };*/
