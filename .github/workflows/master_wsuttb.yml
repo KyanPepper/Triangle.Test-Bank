@@ -16,6 +16,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install dependencies and build TypeScript
+        run: |
+          npm install
+          npm run build
+
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
