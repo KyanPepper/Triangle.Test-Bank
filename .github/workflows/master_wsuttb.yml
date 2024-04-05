@@ -18,7 +18,8 @@ jobs:
 
       - name: Install dependencies and build TypeScript
         run: |
-          npm ci
+          cd Triangle.TestBank.Web
+          npm install
           npm run build
 
       - name: Set up .NET Core
