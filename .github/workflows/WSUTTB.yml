@@ -1,50 +1,67 @@
 name: Build and deploy .NET Core application to Web App WSUTTB
+
 on:
   push:
     branches:
-    - master
+      - master
+
 env:
   AZURE_WEBAPP_NAME: WSUTTB
   AZURE_WEBAPP_PACKAGE_PATH: Triangle.TestBank.Web\published
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 8.0.x
   WORKING_DIRECTORY: Triangle.TestBank.Web
+
 jobs:
   build:
+    name: Build and Upload Artifact for Deployment
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
-    - name: Restore
-      run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
-    - name: Build Typescript
-      run: npm run build
-    - name: Build
-      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
-    - name: Test
-      run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
-    - name: Publish
-      run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
-    - name: Publish Artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: webapp
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+
+      - name: Restore NuGet Packages
+        run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+
+      - name: Build TypeScript
+        run: npm install && npm run build --prefix "${{ env.WORKING_DIRECTORY }}"
+
+      - name: Build and Test
+        run: |
+          dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+          dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
+
+      - name: Publish Artifact
+        run: |
+          dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+          dir "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+
+        # Upload the artifact for deployment
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: webapp
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
   deploy:
+    name: Deploy to Azure WebApp
     runs-on: windows-latest
     needs: build
     steps:
-    - name: Download artifact from build job
-      uses: actions/download-artifact@v3
-      with:
-        name: webapp
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-    - name: Deploy to Azure WebApp
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.WSUTTB_FBA5 }}
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      - name: Download Artifact from Build Job
+        uses: actions/download-artifact@v4
+        with:
+          name: webapp
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+      - name: Deploy to Azure WebApp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.WSUTTB_FBA5 }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
