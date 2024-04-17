@@ -29,7 +29,7 @@ jobs:
         run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
 
       - name: Setup and Build C# Code
-        uses: ./.github/actions/DN
+        uses: ./.github/.actions/DN
         with:
           global-json-file: global.json
 
