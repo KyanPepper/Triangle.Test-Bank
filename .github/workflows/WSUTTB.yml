@@ -28,17 +28,16 @@ jobs:
       - name: Restore NuGet Packages
         run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
 
-      - name: Build TypeScript
-        run: |
-          cd "${{ env.WORKING_DIRECTORY }}"
-          npm install
-          npm run build
+      - name: Setup and Build C# Code
+        uses: ./.github/actions/DN
+        with:
+          global-json-file: global.json
 
-      - name: Build and Test
-        run: |
-          dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
-          dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
-
+      - name: Setup and Build TypeScript
+        uses: ./.github/actions/BTS
+        with:
+          node-version: 20
+          working-directory: "./Triangle.TestBank.Web"
       - name: Publish Artifact
         run: |
           dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"

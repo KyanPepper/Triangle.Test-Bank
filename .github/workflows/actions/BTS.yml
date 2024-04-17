@@ -1,0 +1,28 @@
+name: 'Setup Node.js environment'
+description: 'Sets up Node.js with caching and installs npm packages'
+inputs:
+  node-version:
+    description: 'Node.js version'
+    required: true
+  working-directory:
+    description: 'Working directory'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Set up node with caching
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: 'npm'
+        cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
+
+    - name: Restore and Install npm Packages
+      run: npm ci
+      working-directory: ${{ inputs.working-directory }}
+      shell: pwsh
+
+    - name: Run npm Build
+      run: npm run build
+      working-directory: ${{ inputs.working-directory }}
+      shell: pwsh
