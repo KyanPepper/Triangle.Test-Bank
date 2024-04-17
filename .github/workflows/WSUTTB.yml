@@ -20,30 +20,35 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
       - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
 
       - name: Restore NuGet Packages
         run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
 
-      - name: Setup and Build C# Code
-        uses: ./.github/.actions/DN
-        with:
-          global-json-file: global.json
+      - name: Build TypeScript
+        run: |
+          cd "${{ env.WORKING_DIRECTORY }}"
+          npm install
+          npm run build
 
-      - name: Setup and Build TypeScript
-        uses: ./.github/actions/BTS
-        with:
-          node-version: 20
-          working-directory: "./Triangle.TestBank.Web"
+      - name: Build and Test
+        run: |
+          dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+          dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
+
       - name: Publish Artifact
         run: |
           dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
           dir "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
 
-        # Upload the artifact for deployment
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
